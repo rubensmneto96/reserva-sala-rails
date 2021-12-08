@@ -1,6 +1,7 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   # GET /bookings or /bookings.json
   def index
@@ -13,7 +14,8 @@ class BookingsController < ApplicationController
 
   # GET /bookings/new
   def new
-    @booking = Booking.new
+    #@booking = Booking.new
+    @booking = current_user.bookings.build
   end
 
   # GET /bookings/1/edit
@@ -22,11 +24,12 @@ class BookingsController < ApplicationController
 
   # POST /bookings or /bookings.json
   def create
-    @booking = Booking.new(booking_params)
+    #@booking = Booking.new(booking_params)
+    @booking = current_user.bookings.build(booking_params)
 
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to @booking, notice: "Booking was successfully created." }
+        format.html { redirect_to @booking, notice: "Reserva criada." }
         format.json { render :show, status: :created, location: @booking }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +42,7 @@ class BookingsController < ApplicationController
   def update
     respond_to do |format|
       if @booking.update(booking_params)
-        format.html { redirect_to @booking, notice: "Booking was successfully updated." }
+        format.html { redirect_to @booking, notice: "Reserva atualizada." }
         format.json { render :show, status: :ok, location: @booking }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,9 +55,14 @@ class BookingsController < ApplicationController
   def destroy
     @booking.destroy
     respond_to do |format|
-      format.html { redirect_to bookings_url, notice: "Booking was successfully destroyed." }
+      format.html { redirect_to bookings_url, notice: "Reserva cancelada." }
       format.json { head :no_content }
     end
+  end
+
+  def correct_user
+    @booking = current_user.bookings.find_by(id: params[:id])
+    redirect_to bookings_path, notice: "Não autorizado!" if @booking.nil?
   end
 
   private
