@@ -30,4 +30,6 @@
 
 <br>
 
-<%= link_to 'Nova reserva', new_booking_path, class:"btn btn-success" %>
+<% if user_signed_in? %>
+  <%= link_to 'Nova reserva', new_booking_path, class:"btn btn-success" %>
+<% end %>
