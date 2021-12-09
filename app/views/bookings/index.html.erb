@@ -13,17 +13,9 @@
     </tr>
   </thead>
 
-  <tbody>
+  <tbody id="bookingTable">
     <% @bookings.each do |booking| %>
-      <tr>
-        <td><%= booking.full_name %></td>
-        <td><%= booking.email %></td>
-        <td><%= booking.room %></td>
-        <td><%= booking.date %></td>
-        <td><%= link_to 'Ver reserva', booking, class:"btn btn-primary" %></td>
-        <td><%= link_to 'Editar reserva', edit_booking_path(booking), class:"btn btn-secondary" %></td>
-        <td><%= link_to 'Cancelar reserva', booking, method: :delete, data: { confirm: 'Tem certeza que deseja cancelar a reserva?' }, class:"btn btn-danger" %></td>
-      </tr>
+      <%= render 'booking_row', booking: booking %>
     <% end %>
   </tbody>
 </table>
@@ -32,5 +24,46 @@
 <br>
 
 <% if user_signed_in? %>
-  <%= link_to 'Nova reserva', new_booking_path, class:"btn btn-success" %>
+  <%= link_to 'Nova reserva', new_booking_path, class:"btn btn-success", data: { bs_toggle: 'modal', bs_target: '#newBookingModal', remote: true } %>
 <% end %>
+
+
+
+<div class="modal fade" id="newBookingModal" tabindex="-1" aria-labelledby="newBookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newBookingModalLabel">Reservar sala</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="newBookingForm">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editBookingModal" tabindex="-1" aria-labelledby="editBookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editBookingModalLabel">Editar reserva</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="editBookingForm">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="showBookingModal" tabindex="-1" aria-labelledby="showBookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="showBookingModalLabel">Ver reserva</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div id="showBookingDetails">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<% if @booking.errors.any? %>
+    $("#errors").html("<%= escape_javascript render('error', booking: @booking)%>");
+<% else %>
+    $("#bookingTable").append("<%= escape_javascript render('booking_row', booking: @booking)%>");
+    $(".close-modal").click();
+<% end %>

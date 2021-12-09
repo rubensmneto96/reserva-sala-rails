@@ -5,7 +5,7 @@ class BookingsController < ApplicationController
 
   # GET /bookings or /bookings.json
   def index
-    @bookings = Booking.all
+    @bookings = Booking.order(created_at: :asc)
   end
 
   # GET /bookings/1 or /bookings/1.json
@@ -31,9 +31,11 @@ class BookingsController < ApplicationController
       if @booking.save
         format.html { redirect_to @booking, notice: "Reserva criada." }
         format.json { render :show, status: :created, location: @booking }
+        format.js
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -44,9 +46,11 @@ class BookingsController < ApplicationController
       if @booking.update(booking_params)
         format.html { redirect_to @booking, notice: "Reserva atualizada." }
         format.json { render :show, status: :ok, location: @booking }
+        format.js
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @booking.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -57,6 +61,7 @@ class BookingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to bookings_url, notice: "Reserva cancelada." }
       format.json { head :no_content }
+      format.js
     end
   end
 

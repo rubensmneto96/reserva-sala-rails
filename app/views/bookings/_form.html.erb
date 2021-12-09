@@ -1,45 +1,31 @@
-<%= form_with(model: booking) do |form| %>
-  <% if booking.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
-
-      <ul>
-        <% booking.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: booking, local: false) do |form| %>
+  <div class="modal-body">
+  <div id="errors"></div>
+   
+    <div class="field form-group mt-3">
+      <%= form.label :full_name %>
+      <%= form.text_field :full_name, class:"form-control", :required => 'Campo vazio! Preencha corretamente' %>
     </div>
-  <% end %>
-
-  <div class="field form-group">
-    <%= form.label :full_name %>
-    <%= form.text_field :full_name, class:"form-control", :required => 'Campo vazio! Preencha corretamente' %>
+    <div class="field form-group mt-3">
+      <%= form.label :email %>
+      <%= form.text_field :email, class:"form-control", :required => 'Campo vazio! Preencha corretamente'  %>
+    </div>
+    <div class="field form-group mt-3">
+      <%= form.label :room %>
+      <%= form.text_field :room, class:"form-control", :required => 'Campo vazio! Preencha corretamente'  %>
+    </div>
+    <div class="field form-group mt-3">
+      <%= form.number_field :user_id, id: :booking_user_id, class:"form-control", value: current_user.id, type: :hidden %>
+    </div>
+    <br>
+    <div class="field form-group mt-3">
+      <%= form.label :date %>
+      <%= form.datetime_select :date %>
+    </div>
+    <br>
   </div>
-
-  <div class="field form-group">
-    <%= form.label :email %>
-    <%= form.text_field :email, class:"form-control", :required => 'Campo vazio! Preencha corretamente'  %>
-  </div>
-
-  <div class="field form-group">
-    <%= form.label :room %>
-    <%= form.text_field :room, class:"form-control", :required => 'Campo vazio! Preencha corretamente'  %>
-  </div>
-
-  <div class="field form-group">
-    <%= form.number_field :user_id, id: :booking_user_id, class:"form-control", value: current_user.id, type: :hidden %>
-  </div>
-
-  <br>
-
-  <div class="field form-group">
-    <%= form.label :date %>
-    <%= form.datetime_select :date %>
-  </div>
-
-  <br>
-
-  <div class="actions">
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary close-modal" data-bs-dismiss="modal">Fechar</button>
     <%= form.submit class:"btn btn-success" %>
   </div>
 <% end %>

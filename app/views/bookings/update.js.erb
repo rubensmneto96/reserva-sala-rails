@@ -1,0 +1,6 @@
+<% if @booking.errors.any? && !current_user %>
+  alert('Preenchimento incorreto!');
+<% else %>
+  $("#bookingRow_<%= @booking.id %>").replaceWith("<%= escape_javascript render('booking_row', booking: @booking)%>");
+  $(".close-modal").click();
+<% end %>

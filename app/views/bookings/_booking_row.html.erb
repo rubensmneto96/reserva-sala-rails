@@ -1,0 +1,9 @@
+<tr id="bookingRow_<%= booking.id %>">
+  <td><%= booking.full_name %></td>
+  <td><%= booking.email %></td>
+  <td><%= booking.room %></td>
+  <td><%= booking.date %></td>
+  <td><%= link_to 'Ver reserva', booking, class:"btn btn-primary", data: { bs_toggle: "modal", bs_target: "#showBookingModal", remote: true } %></td>
+  <td><%= link_to 'Editar reserva', edit_booking_path(booking), class:"btn btn-secondary", data: { bs_toggle: 'modal', bs_target: '#editBookingModal', remote: true } %></td>
+  <td><%= link_to 'Cancelar reserva', booking, method: :delete, data: { confirm: 'Tem certeza que deseja cancelar a reserva?', remote: true }, class:"btn btn-danger" %></td>
+</tr>
